@@ -8,7 +8,7 @@ def index(request):
     return render(request,'ejemploAjax/index.html')
 
 def cargarInformacion(request,num):
-    if num == '1':
+    if num == '1': 
         return HttpResponse('Texto 1 del servidor')
     else:
         return HttpResponse('Texto del servidor, no se recibio 1')

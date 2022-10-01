@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse
 from .models import tareasExamen, usuariosFinal
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
+import json
 
 # Create your views here.
 def index(request):
@@ -27,4 +28,39 @@ def index(request):
 def dashboard(request):
     return render(request,'examenFinal/dashboard.html',{
         'tareas_totales':tareasExamen.objects.all().order_by('id')
+    })
+
+def obtener_info_tarea(request):
+    id_tarea = str(request.GET.get('idTarea'))
+    tareas = tareasExamen.objects.get(id=id_tarea)
+    return JsonResponse({
+        'mostrar_detalles': {
+            'id': tareas.id,
+            'fechaCreacion': tareas.fechaCreacion,
+            'fechaEntrega': tareas.fechaEntrega,
+            'descripcion': tareas.descripcion,
+            'estadoTarea': tareas.estadoTarea
+        }
+    })
+
+
+    
+def agregarTarea(response,fechaCreacion,fechaEntrega,descripcion): 
+    tareasExamen(fechaCreacion=fechaCreacion,fechaEntrega=fechaEntrega,descripcion=descripcion).save()
+    tareas_totales = tareasExamen.objects.all()
+    infoTareas  = []
+    for tarea in tareas_totales:
+        infoTareas.append([tarea.id,tarea.fechaCreacion,tarea.fechaEntrega,tarea.descripcion,tarea.estadoTarea])
+    return JsonResponse({
+        'tareaInformacion':infoTareas, 
+    })
+
+
+def eliminarTarea(request):
+    id_Elimtarea= str(request.GET.get('idTarea'))
+    Elimtarea = tareasExamen.objects.get(id=id_Elimtarea)
+    lista_Elimtarea = [Elimtarea.id,Elimtarea.fechaCreacion,Elimtarea.fechaEntrega,Elimtarea.descripcion,Elimtarea.estadoTarea]
+    tareasExamen.objects.get(id=id_Elimtarea).delete()
+    return JsonResponse({
+        'Elimtarea':lista_Elimtarea
     })

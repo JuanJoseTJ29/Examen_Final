@@ -14,7 +14,7 @@
             {
                 let elemento_seleccion = document.querySelector('#categoria')
                 console.log(elemento_seleccion.value)
-
+ 
                 fetch(`/ejemploAjax/cargarUsuarios?categoria=${elemento_seleccion.value}`)
                 .then(response => response.json())
                 .then(data => {
