@@ -30,6 +30,7 @@ def dashboard(request):
         'tareas_totales':tareasExamen.objects.all().order_by('id')
     })
 
+# La informacion de la tarea sera devuelta como un Json
 def obtener_info_tarea(request):
     id_tarea = str(request.GET.get('idTarea'))
     tareas = tareasExamen.objects.get(id=id_tarea)
@@ -46,11 +47,13 @@ def obtener_info_tarea(request):
 
     
 def agregarTarea(response,fechaCreacion,fechaEntrega,descripcion): 
+    #Se insertan los datos de la tarea creada a la BD
     tareasExamen(fechaCreacion=fechaCreacion,fechaEntrega=fechaEntrega,descripcion=descripcion).save()
     tareas_totales = tareasExamen.objects.all()
     infoTareas  = []
     for tarea in tareas_totales:
         infoTareas.append([tarea.id,tarea.fechaCreacion,tarea.fechaEntrega,tarea.descripcion,tarea.estadoTarea])
+    # Se devolvera la lista de tarea que hay y con la que se acaba de crear
     return JsonResponse({
         'tareaInformacion':infoTareas, 
     })
@@ -60,7 +63,18 @@ def eliminarTarea(request):
     id_Elimtarea= str(request.GET.get('idTarea'))
     Elimtarea = tareasExamen.objects.get(id=id_Elimtarea)
     lista_Elimtarea = [Elimtarea.id,Elimtarea.fechaCreacion,Elimtarea.fechaEntrega,Elimtarea.descripcion,Elimtarea.estadoTarea]
+    #Se eliminara la tarea de la BD 
     tareasExamen.objects.get(id=id_Elimtarea).delete()
+    # Se devolvera la lista de tareas que hay y ya no aparecera la que se ha eliminado 
     return JsonResponse({
         'Elimtarea':lista_Elimtarea
     })
+
+def editarTarea(request):
+    id_editTarea = str(request.GET.get('idTarea'))
+    Edittarea = tareasExamen.objects.get(id=id_Edittarea)
+    return JsonResponse({
+        'Editartarea':lista_editTarea
+    })
+
+

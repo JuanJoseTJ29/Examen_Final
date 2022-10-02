@@ -35,8 +35,11 @@
            function mostrarDetalle(id_tarea)
            {
             console.log(id_tarea) 
+            //el id es enviado hacia el servidor
             fetch(`/examenFinal/obtener_info_tarea?idTarea=${id_tarea}`)
+            //Se espera el objeto json
             .then(response => response.json())
+            //Se recibe el objeto json
             .then(data => {
                 console.log(data)
                 let show_detalle = document.querySelector('#showDetalle')   
@@ -75,6 +78,7 @@
 
             console.log('Funcion para eliminar el HTML interior de la ventana')
             // Tambien podriamos utilizar querySelctor
+            //Se eliminar la informacion al interior de la ventana modal
             document.getElementById("idTareas").innerHTML = "" 
             document.getElementById("descripcionn").innerHTML = ""
             document.getElementById("estado").innerHTML = ""
@@ -107,9 +111,11 @@
             document.querySelector("#feCreacionn").value = ""  
             document.querySelector("#feEntregaa").value = ""  
             document.querySelector("#descripcionnn").value = ""
-
+            
+            //Se envian los datos hacia el servidor
             fetch(`agregarTarea/${fechaCreacion}/${fechaEntrega}/${descripcion}`)
             .then(response => response.json())
+            //Se recibe el objeto json y se actualiza el html
             .then(data => {
                 let infoTabla = document.querySelector("#tareasDatos")
                 infoTabla.innerHTML=''
@@ -162,8 +168,11 @@
            function eliminarTarea(id_tarea)
            {
             console.log(id_tarea)
+            //el id es enviado hacia el servidor
             fetch(`/examenFinal/eliminarTarea?idTarea=${id_tarea}`)
+            //Se espera el objeto json
             .then(response => response.json())
+            //Se recibe el objeto json y se actualiza el html
             .then(data=>{
                 let tareaInfoo = data.Elimtarea
                 let eliminarInfo = `
@@ -193,18 +202,16 @@
            */
            function editarTarea(id_tarea)
            {
+
             console.log(id_tarea) 
+            //El codigo inicia aqui
             fetch(`/examenFinal/editarTarea?idTarea=${id_tarea}`)
             .then(response => response.json())
-            .then(data => {
-                
-                })
-            
+                    
+            //Fin del codigo
         }
            
-
         </script>
-
 
     </head>
     <body>
