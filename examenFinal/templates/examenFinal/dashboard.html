@@ -39,7 +39,7 @@
             fetch(`/examenFinal/obtener_info_tarea?idTarea=${id_tarea}`)
             //Se espera el objeto json
             .then(response => response.json())
-            //Se recibe el objeto json
+            //se recibe el objeto json
             .then(data => {
                 console.log(data)
                 let show_detalle = document.querySelector('#showDetalle')   
