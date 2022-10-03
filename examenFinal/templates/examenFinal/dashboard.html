@@ -58,11 +58,8 @@
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBlXuW1Ty5soSXFsny8PhlfP4fF6cVS1qWZA&usqp=CAU" class="img-fluid" alt="Responsive image">
                     </div>
                  </div>
-
                 `
-                show_detalle.innerHTML = datos
-
-                
+                show_detalle.innerHTML = datos     
             })
            }
 
@@ -202,13 +199,55 @@
            */
            function editarTarea(id_tarea)
            {
-
             console.log(id_tarea) 
-            //El codigo inicia aqui
-            fetch(`/examenFinal/editarTarea?idTarea=${id_tarea}`)
+            //el id es enviado hacia el servidor
+            fetch(`/examenFinal/mostrarEditarTarea?idTarea=${id_tarea}`)
+            //Se espera el objeto json
             .then(response => response.json())
-                    
-            //Fin del codigo
+            //se recibe el objeto json
+            .then(data => {
+                console.log(data)
+                let edit_detalle = document.querySelector('#showEdit')   
+                let edit_view = data.datostarea
+                let datos = `
+
+                <div class="card text-center">
+                    <div class="card-header">
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>ID:</label>
+                                <input id="idEdit" name="descripcion" value=${edit_view.id} class="form-control form-control-lg" required type="text" readonly >
+                            </div>
+
+                            <div class="form-group">
+                                <label>Descripcion:</label>
+                                <input id="idEdit" name="descripcion" value="" class="form-control form-control-lg" required type="text" >
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fecha de creacion:</label>
+                                <input id="feCreacEdit" name="fechaCreacion" value="" class="form-control form-control-lg" required type="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fecha de entrega:</label>
+                                <input id="" name="feEntreEdit" value="" class="form-control form-control-lg" required type="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Estado:</label>
+                                <input id="estadoEdit" name="estado" value="PROGRESO" class="form-control form-control-lg" required type="text" readonly>
+                            </div>
+
+                            <img src="https://media.istockphoto.com/vectors/content-writing-icon-blue-color-vector-id1257231105?k=20&m=1257231105&s=170667a&w=0&h=wwJa7D6G7sFV-SoglXGOi21qelQp2ogZZcK23CDEUnQ=" class="img-fluid" alt="Responsive image">
+                        </div>
+
+                        </div>
+                    </div>
+                `
+                edit_detalle.innerHTML = datos
+            })
         }
            
         </script>
@@ -270,23 +309,23 @@
             <div class="modal-body">
           
                 <div class="form-group">
-                    <label>Descripcion</label>
+                    <label>Descripcion:</label>
                     <input id="descripcionnn" name="descripcion" value="" class="form-control form-control-lg" required type="text" >
                     
                 </div>
 
                 <div class="form-group">
-                    <label>Fecha de creacion</label>
+                    <label>Fecha de creacion:</label>
                     <input id="feCreacionn" name="fechaCreacion" value="" class="form-control form-control-lg" required type="date">
                 </div>
 
                 <div class="form-group">
-                    <label>Fecha de entrega</label>
+                    <label>Fecha de entrega:</label>
                     <input id="feEntregaa" name="fechaEntrega" value="" class="form-control form-control-lg" required type="date">
                 </div>
 
                 <div class="form-group">
-                    <label>Estado</label>
+                    <label>Estado:</label>
                     <input id="nEstadoo" name="estado" value="PROGRESO" class="form-control form-control-lg" required type="text" readonly>
                 </div>
                 <img src="http://www.webquestcreator2.com/majwq/files/files_user/48099/tareas-pendientes-L-1.jpeg" class="img-fluid" alt="Responsive image">
@@ -317,26 +356,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="showEdit">  
 
-                <div class="form-group">
-                    <label>Descripcion</label>
-                    <input id="idEdit" name="descripcion" value="" class="form-control form-control-lg" required type="text" >
-                    
-                </div>
-
-                <div class="form-group">
-                    <label>Fecha de creacion</label>
-                    <input id="feCreacEdit" name="fechaCreacion" value="" class="form-control form-control-lg" required type="date">
-                </div>
-
-                <div class="form-group">
-                    <label>Fecha de entrega</label>
-                    <input id="" name="feEntreEdit" value="" class="form-control form-control-lg" required type="date">
-                </div>
-
-                <div class="form-group">
-                    <label>Estado</label>
-                    <input id="estadoEdit" name="estado" value="PROGRESO" class="form-control form-control-lg" required type="text" readonly>
                 </div>
             </div>
             <div class="modal-footer">

@@ -70,11 +70,18 @@ def eliminarTarea(request):
         'Elimtarea':lista_Elimtarea
     })
 
-def editarTarea(request):
-    id_editTarea = str(request.GET.get('idTarea'))
-    Edittarea = tareasExamen.objects.get(id=id_Edittarea)
+# La informacion sera devuelta como un Json
+def mostrarEditarTarea(request):
+    idEdittarea = str(request.GET.get('idTarea'))
+    editTarea = tareasExamen.objects.get(id=idEdittarea)
     return JsonResponse({
-        'Editartarea':lista_editTarea
+       'datostarea': {
+            'id':  editTarea.id,
+            'fechaCreacion':  editTarea.fechaCreacion,
+            'fechaEntrega':  editTarea.fechaEntrega,
+            'descripcion':  editTarea.descripcion,
+            'estadoTarea':  editTarea.estadoTarea
+        }
     })
 
 
